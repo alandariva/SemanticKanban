@@ -1,0 +1,69 @@
+<template name="contaLogin">
+	<div class="ui two column middle aligned relaxed fitted stackable grid">
+	  <div class="column">
+	    <div class="ui form segment">
+	      <div class="field">
+	        <label>Username</label>
+	        <div class="ui left icon input">
+	          <input placeholder="Username" type="text">
+	          <i class="user icon"></i>
+	        </div>
+	      </div>
+	      <div class="field">
+	        <label>Password</label>
+	        <div class="ui left icon input">
+	          <input type="password">
+	          <i class="lock icon"></i>
+	        </div>
+	      </div>
+	      <div class="ui blue submit button">Login</div>
+	    </div>
+	  </div>
+	  <div class="ui vertical divider">
+	    Ou
+	  </div>
+	  <div class="center aligned column">
+	    <div id="btn" class="huge green ui labeled icon button">
+	      <i class="signup icon"></i>
+	      Sign Up
+	    </div>
+	  </div>
+	</div>
+</template>
+
+<template name="contaNova">
+	<h1>Nova conta</h1>
+	<form class="ui form">
+  <h4 class="ui dividing header">Personal Information</h4>
+  <div class="two fields">
+    <div class="field">
+      <label>E-mail</label>
+      <input name="email" placeholder="E-mail" type="text">
+    </div>
+
+    <div class="field">
+      <label>Senha</label>
+      <input name="senha" placeholder="Senha" type="password">
+    </div>
+    
+  </div>
+
+  <div id="registrar" class="ui submit button">Register</div>
+</form>
+
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Modal Title
+  </div>
+  <div class="content">
+    <div class="description">
+      
+    </div>
+  </div>
+  <div class="actions">
+    <div class="ui button">Cancel</div>
+    <div class="ui button">OK</div>
+  </div>
+</div>
+</template>
