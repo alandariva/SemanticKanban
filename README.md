@@ -1,2 +1,2 @@
 # SemanticKanban
-Kanban using semantic-ui
+Kanban using Semantic UI and Meteor
