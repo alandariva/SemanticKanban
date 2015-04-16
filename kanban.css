@@ -1,1 +1,26 @@
-/* CSS declarations go here */
+
+.kanban {
+    display: block;
+    overflow-x: auto;
+}
+
+.kanban-inner {
+    width: 2000px;
+}
+
+.status-column {
+    width: 230px;
+    float: left;
+    min-height: 200px;
+/*    background: #ccc;*/
+}
+
+.status {
+    margin-right: 20px;
+    padding: 5px;
+    background: #ccc;
+}
+
+.status .move {
+    cursor: pointer;
+}

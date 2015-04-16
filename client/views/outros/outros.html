@@ -1,11 +1,232 @@
 <template name="Home">
-<h1>Home</h1>
+    <h1>Home</h1>
 
-{{emailUsuario}}
+    <div class="kanban">
+        <div class="kanban-inner">
+
+            <div class="status-columns">
+                {{#each status}}
+                <div class="status-column">
+                    {{> StatusItem}}
+                </div>
+                {{/each}}
+            </div>
+
+            <div class="circular ui icon green button" id="btn-novo-status">
+                Novo <i class="icon add"></i>
+            </div>
+
+            <div class="ui modal" id="modal-novo-status">
+                <i class="close icon"></i>
+                <div class="header">
+                    Status
+                </div>
+                <div class="content">
+                    <div class="ui form">
+                        <div class="field">
+                            <label>Nome</label>
+                            <input type="text" name="nome" placeholder="Nome">
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div class="ui red button" id="btn-fechar-modal-novo-status">
+                        Cancelar
+                    </div>
+                    <div class="ui positive right labeled icon button" id="btn-criar-status">
+                        Criar
+                        <i class="checkmark icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            <div class="status">
+                <h5 class="ui top attached header">
+                    Dogs
+                </h5>
+                <div class="ui attached segment">
+                    <div class="task">
+                        <div class="ui fluid card">
+                          <div class="image">
+                            <img src="/images/avatar/large/daniel.jpg">
+                          </div>
+                          <div class="content">
+                            <a class="header">Daniel Louise</a>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="task">
+                        <div class="ui fluid card">
+                          <div class="image">
+                            <img src="/images/avatar/large/daniel.jpg">
+                          </div>
+                          <div class="content">
+                            <a class="header">Daniel Louise</a>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status">
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status">
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status">
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status">
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+                <div class="task">
+                    <div class="ui fluid card">
+                      <div class="image">
+                        <img src="/images/avatar/large/daniel.jpg">
+                      </div>
+                      <div class="content">
+                        <a class="header">Daniel Louise</a>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            -->
+        </div>
+    </div>
 </template>
+
+<template name="StatusItem">
+    <div class="status">
+        <input type="hidden" value="{{ID}}" />
+        <div class="ui icon top left pointing dropdown button">
+            <i class="wrench icon"></i>
+            <div class="menu">
+                <div class="item" id="btn-deletar">Deletar</div>
+            </div>
+        </div>
+
+        <i class="move icon"></i>
+
+        <h5 class="ui top attached header">
+            {{nome}}
+        </h5>
+
+        <div class="ui attached segment">
+            {{#each tarefa}}
+            {{> TarefaItem}}
+            {{/each}}
+        </div>
+    </div>
+</template>
+
+<template name="TarefaItem">
+    <div class="ui vertical segment">
+        <div class="task">
+            <div class="ui fluid card">
+                <div class="image">
+                    <img src="/images/avatar/large/daniel.jpg">
+                </div>
+                <div class="content">
+                    <a class="header">Daniel Louise</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
 <template name="PostIndex">
-<h1>Post Index</h1>
+    <h1>Post Index</h1>
 </template>
 <template name="PostShow">
-<h1>Post Show</h1>
+    <h1>Post Show</h1>
 </template>
