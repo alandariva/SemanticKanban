@@ -23,6 +23,8 @@
                 </div>
                 <div class="content">
                     <div class="ui form">
+                        <input type="hidden" name="_id" />
+                        
                         <div class="field">
                             <label>Nome</label>
                             <input type="text" name="nome" placeholder="Nome">
@@ -33,9 +35,8 @@
                     <div class="ui red button" id="btn-fechar-modal-novo-status">
                         Cancelar
                     </div>
-                    <div class="ui positive right labeled icon button" id="btn-criar-status">
+                    <div class="ui positive right labeled icon button" id="btn-confirmar-status">
                         Criar
-                        <i class="checkmark icon"></i>
                     </div>
                 </div>
             </div>
@@ -188,10 +189,15 @@
 <template name="StatusItem">
     <div class="status">
         <input type="hidden" value="{{ID}}" />
+        <div class="ui dropdown button">
+            <i class="plus icon"></i>
+            Tarefa
+        </div>
         <div class="ui icon top left pointing dropdown button">
             <i class="wrench icon"></i>
             <div class="menu">
-                <div class="item" id="btn-deletar">Deletar</div>
+                <div class="item" id="btn-editar-status">Editar</div>
+                <div class="item" id="btn-deletar-status">Deletar</div>
             </div>
         </div>
 

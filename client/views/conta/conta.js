@@ -1,3 +1,5 @@
+Status = new Mongo.Collection("status");
+
 Template.contaLogin.onRendered(function(){
 	$('#login').form({
 		usuario: {
@@ -113,10 +115,4 @@ Template.contaNova.events({
 			// 	Router.go('/');
 		});
 	}
-});
-
-Template.Home.helpers({
-	  emailUsuario: function () {
-	    return Meteor.user().emails[0].address;
-	  }
 });
