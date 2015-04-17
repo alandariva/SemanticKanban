@@ -1,0 +1,167 @@
+<template name="Home">
+    <h1>Kanban</h1>
+
+    <div class="kanban">
+        <div class="kanban-inner">
+
+            <div class="status-columns">
+                {{#each status}}
+                <div class="status-column">
+                    {{> StatusItem}}
+                </div>
+                {{/each}}
+            </div>
+
+            <div class="circular ui icon green button" id="btn-novo-status">
+                Novo <i class="icon add"></i>
+            </div>
+
+            <div class="ui modal" id="modal-novo-status">
+                <i class="close icon"></i>
+                <div class="header">
+                    Status
+                </div>
+                <div class="content">
+                    <div class="ui form">
+                        <input type="hidden" name="_id" />
+                        
+                        <div class="field">
+                            <label>Nome</label>
+                            <input type="text" name="nome" placeholder="Nome">
+                        </div>
+                    </div>
+                </div>
+                <div class="actions">
+                    <div class="ui red button" id="btn-fechar-modal-novo-status">
+                        Cancelar
+                    </div>
+                    <div class="ui positive right labeled icon button" id="btn-confirmar-status">
+                        Criar
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<template name="StatusItem">
+    <div class="status">
+        <input type="hidden" value="{{ID}}" />
+        <div class="ui dropdown button">
+            <i class="plus icon"></i>
+            Tarefa
+        </div>
+        <div class="ui icon top left pointing dropdown button">
+            <i class="wrench icon"></i>
+            <div class="menu">
+                <div class="item" id="btn-editar-status">Editar</div>
+                <div class="item" id="btn-deletar-status">Deletar</div>
+            </div>
+        </div>
+
+        <i class="move icon"></i>
+
+        <h5 class="ui top attached header">
+            {{nome}}
+        </h5>
+        
+        <div class="ui modal" id="historico-tarefa">
+            <i class="close icon"></i>
+            <div class="header">
+                Histórico da Tarefa "Tarefa #1"
+            </div>
+            <div class="content">
+                <div class="ui feed">
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <a class="user">
+                                    Alan
+                                </a> alterou para status finalizado
+                                <div class="date">
+                                    1 Hora Atrás
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <a class="user">
+                                    Renan
+                                </a> alterou para status desenvolvimento
+                                <div class="date">
+                                    2 Horas Atrás
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                <a class="user">
+                                    Róger
+                                </a> alterou para status backlog
+                                <div class="date">
+                                    3 Horas Atrás
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui button">Fechar</div>
+            </div>
+        </div>
+
+        <div class="ui attached segment">
+            
+            {{#each tarefa}}
+            {{> TarefaItem}}
+            {{/each}}
+            <div class="ui card">
+                <div class="content">
+                    <div class="header">Tarefa #1</div>
+                    <div class="description">
+                        <p>Tarefa de teste</p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <div class="right floated author">
+                        <img class="ui avatar image" src="/images/matt.jpg"> Matt
+                    </div>
+                </div>
+            </div>
+            <div class="ui card">
+                <div class="content">
+                    <div class="header">Tarefa #2</div>
+                    <div class="description">
+                        <p>Tarefa de teste</p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <div class="right floated author">
+                        <img class="ui avatar image" src="/images/matt.jpg"> Matt
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="TarefaItem">
+    <div class="ui vertical segment">
+        <div class="task">
+            <div class="ui fluid card">
+                <div class="image">
+                    <img src="/images/avatar/large/daniel.jpg">
+                </div>
+                <div class="content">
+                    <a class="header">Daniel Louise</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

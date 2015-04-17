@@ -28,6 +28,9 @@ Template.StatusItem.events({
         
         nomeField.val(status.nome);
         $('#modal-novo-status input[name=_id]').val(this._id);
+    },
+    'click .card' : function(e) {
+        $('#historico-tarefa').modal('show')
     }
 });
 
@@ -72,14 +75,6 @@ Template.Home.events({
         $('#btn-confirmar-status').html('Criar');
     },
     'mouseover .icon': function(e) {
-        
-//        $( ".status" ).sortable({
-//            connectWith: ".status",
-//            handle: ".portlet-header",
-//            cancel: ".portlet-toggle",
-//            placeholder: "portlet-placeholder ui-corner-all"
-//          });
-//        $(e.target).closest('.status').draggable({ handle: ".move", axis: 'x' });
     }
 });
 

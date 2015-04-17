@@ -1,83 +1,95 @@
 <template name="contaLogin">
-	<div class="ui two column middle aligned relaxed fitted stackable grid">
-	  <div class="column">
-	    <form id="login" class="ui form segment">
-	      <div class="field">
-	        <label>Username</label>
-	        <div class="ui left icon input">
-	          <input name="usuario" placeholder="Username" type="text">
-	          <i class="user icon"></i>
-	        </div>
-	      </div>
-	      <div class="field">
-	        <label>Password</label>
-	        <div class="ui left icon input">
-	          <input name="senha" type="password">
-	          <i class="lock icon"></i>
-	        </div>
-	      </div>
-	      <div class="ui blue submit button">Login</div>
-	    </form>
-	  </div>
-	  <div class="ui vertical divider">
-	    Ou
-	  </div>
-	  <div class="center aligned column">
-	    <div id="btn" class="huge green ui labeled icon button">
-	      <i class="signup icon"></i>
-	      Sign Up
-	    </div>
-	  </div>
-	</div>
+    <main class="ui page grid">
+        <div class="row">
+            <div class="column">
+                <div class="ui two column middle aligned relaxed fitted stackable grid">
+                    <div class="column">
+                        <form id="login" class="ui form segment">
+                            <div class="field">
+                                <label>Email</label>
+                                <div class="ui left icon input">
+                                    <input name="usuario" placeholder="Email" type="text">
+                                    <i class="user icon"></i>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label>Senha</label>
+                                <div class="ui left icon input">
+                                    <input name="senha" placeholder="Senha" type="password">
+                                    <i class="lock icon"></i>
+                                </div>
+                            </div>
+                            <div id="btn-login" class="ui blue submit button">Login</div>
+                        </form>
+                    </div>
+                    <div class="ui vertical divider">
+                        Ou
+                    </div>
+                    <div class="center aligned column">
+                        <div id="btn-registrar" class="huge green ui labeled icon button">
+                            <i class="signup icon"></i>
+                            Registrar
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </template>
 
 <template name="contaNova">
-  <div class="ui success message hidden">
-    <i class="close icon"></i>
-    <div class="header">
-      Cadastro realizado com sucesso.
-    </div>
-    <p>Agora você já pode utilizar o Kanban</p>
-  </div>
-	<h1>Nova conta</h1>
-  <form class="ui form" id="novo">
-    <h4 class="ui dividing header">Informações Pessoais</h4>
-    
-    <div class="field">
-      <div class="field">
-        <label>Nome:</label>
-        <input name="nome" placeholder="Nome" type="text">
-      </div> 
-    </div>
-    <div class="two fields">
-      <div class="field">
-        <label>E-mail</label>
-        <input name="email" placeholder="E-mail" type="text">
-      </div>
+    <main class="ui page grid">
+        <div class="row">
+            <div class="column">
+                <div class="ui success message hidden">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Cadastro realizado com sucesso.
+                    </div>
+                    <p>Agora você já pode utilizar o Kanban</p>
+                </div>
+                <h1>Nova conta</h1>
+                <form class="ui form" id="novo">
+                    <h4 class="ui dividing header">Informações Pessoais</h4>
 
-      <div class="field">
-        <label>Senha</label>
-        <input name="senha" placeholder="Senha" type="password">
-      </div>
-      
-    </div>
+                    <div class="field">
+                        <div class="field">
+                            <label>Nome:</label>
+                            <input name="nome" placeholder="Nome" type="text">
+                        </div> 
+                    </div>
+                    <div class="two fields">
+                        <div class="field">
+                            <label>E-mail</label>
+                            <input name="email" placeholder="E-mail" type="text">
+                        </div>
 
-    <div id="registrar" class="ui submit button">Register</div>
-  </form>
+                        <div class="field">
+                            <label>Senha</label>
+                            <input name="senha" placeholder="Senha" type="password">
+                        </div>
 
-<div class="ui modal">
-  <i class="close icon"></i>
-  <div class="header">
-    Modal Title
-  </div>
-  <div class="content">
-    <div class="description">
-      
-    </div>
-  </div>
-  <div class="actions">
-    <div class="ui button">Cancel</div>
-    <div class="ui button">OK</div>
-  </div>
-</div>
+                    </div>
+
+                    <div id="registrar" class="ui submit button">Register</div>
+                </form>
+
+                <div class="ui modal">
+                    <i class="close icon"></i>
+                    <div class="header">
+                        Modal Title
+                    </div>
+                    <div class="content">
+                        <div class="description">
+
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div class="ui button">Cancel</div>
+                        <div class="ui button">OK</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </template>
