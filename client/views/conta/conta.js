@@ -1,107 +1,122 @@
-
-Status = new Mongo.Collection("status");
+Template.contaLogin.onRendered(function(){
+	$('#login').form({
+		usuario: {
+			identifier: 'usuario',
+			rules: [
+				{
+					type: 'email',
+					prompt: 'Por favor, informe um e-mail válido.'
+				}
+			]
+		},
+		senha: {
+			identifier: 'senha',
+			rules: [
+				{
+					type: 'empty',
+					prompt: 'Por favor, informe a Senha'
+				},
+				{
+					type: 'length[6]',
+					prompt: 'Sua senha deve possuir pelo menos 6 caracteres'
+				}
+			]
+		}
+	},
+	{
+      inline : true,
+      on     : 'blur'
+  });
+})
 
 Template.contaLogin.events({
-    'click #btn': function (e) {
-        e.preventDefault();
-        Router.go('/conta/nova');
-    }
+	'click #btn': function(e) {
+		e.preventDefault();
+		Router.go('/conta/nova');
+	}
+});
+
+Template.contaNova.onRendered(function(){
+
+	$('#novo').form({
+		nome: {
+			identifier: 'nome',
+			rules: [
+				{
+					type: 'empty',
+					prompt: 'Por favor, informe um nome válido.'
+				}
+			]
+		},
+		email: {
+			identifier: 'email',
+			rules: [
+				{
+					type: 'email',
+					prompt: 'Por favor, informe um e-mail válido.'
+				}
+			]
+		},
+		senha: {
+			identifier: 'senha',
+			rules: [
+				{
+					type: 'empty',
+					prompt: 'Por favor, informe a Senha'
+				},
+				{
+					type: 'length[6]',
+					prompt: 'Sua senha deve possuir pelo menos 6 caracteres'
+				}
+			]
+		}
+	},
+	{
+      inline : true,
+      on     : 'blur'
+  })
 });
 
 Template.contaNova.events({
-    'click #registrar': function (event) {
-        event.preventDefault();
+	'click #registrar': function(event) {
+		event.preventDefault();
 
-        var form = $(event.target).closest('form');
-        form.submit();
+		var form = $(event.target).closest('form');
+		form.submit();
+		
+	},
+	'submit form': function(event) {
+		event.preventDefault();
 
-        /*
-         
-         var dados = {
-         email: $(this).closest('form').val(),
-         password: event.target.senha.value
-         };
-         
-         Accounts.createUser(dados, function(err) {
-         if (err)
-         console.log(err);
-         else
-         console.log('success!');
-         });
-         */
-    },
-    'submit form': function (event) {
-        event.preventDefault();
+		var dados = {
+			email: event.target.email.value,
+			password: event.target.senha.value
+		};
 
-        var dados = {
-            email: event.target.email.value,
-            password: event.target.senha.value
-        };
+		Accounts.createUser(dados, function(err) {
 
-        Accounts.createUser(dados, function (err) {
-            if (err) {
-                $('.ui.modal')
-                        .modal('show')
-                        .find('.description').html(err)
-                        ;
-            }
-            else
-                Router.go('/');
-        });
-    }
-});
+			$('.success.message').fadeIn();
 
-Template.Home.events({
-    'click #btn-criar-status': function (e) {
-        e.preventDefault();
-        
-        var nomeField = $('#modal-novo-status input[name=nome]');
-        
-        Status.insert({
-            nome: nomeField.val()
-        });
-        
-        nomeField.val('');
-        
-        $('#modal-novo-status').modal('hide');
-    },
-    'click #btn-fechar-modal-novo-status': function (e) {
-        e.preventDefault();
-        
-        $('#modal-novo-status').modal('hide');
-    },
-    'click #btn-novo-status': function (e) {
-        $('#modal-novo-status').modal({
-            detachable:false,
-            selector    : {
-                close    : '.close',
-                approve  : '',
-                deny     : ''
-            }
-        }).modal('show');
-    },
-    'mouseover .icon': function(e) {
-        
-//        $( ".status" ).sortable({
-//            connectWith: ".status",
-//            handle: ".portlet-header",
-//            cancel: ".portlet-toggle",
-//            placeholder: "portlet-placeholder ui-corner-all"
-//          });
-//        $(e.target).closest('.status').draggable({ handle: ".move", axis: 'x' });
-    }
+			setTimeout(function() {
+
+				$('.success.message').fadeOut();
+				Router.go('/posts/');
+			}, 3500);
+
+			// if (err) {
+			// 	$('.ui.modal')
+			// 	  .modal('show')
+			// 	  .find('.description').html(err)
+			// 	;
+			// }
+			// else
+			// 	Router.go('/');
+		});
+	}
 });
 
 Template.Home.helpers({
-    emailUsuario: function () {
-        
-        return Meteor.user().emails[0].address;
-    },
-    status: function() {
-        return Status.find({});
-    }
-});
-
-Template.Home.onRendered(function () {
-    console.log(this.$('.status'));
+	  emailUsuario: function () {
+	    return Meteor.user().emails[0].address;
+	  }
 });
