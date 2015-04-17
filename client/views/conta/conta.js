@@ -1,8 +1,80 @@
+Template.contaLogin.onRendered(function(){
+	$('#login').form({
+		usuario: {
+			identifier: 'usuario',
+			rules: [
+				{
+					type: 'email',
+					prompt: 'Por favor, informe um e-mail válido.'
+				}
+			]
+		},
+		senha: {
+			identifier: 'senha',
+			rules: [
+				{
+					type: 'empty',
+					prompt: 'Por favor, informe a Senha'
+				},
+				{
+					type: 'length[6]',
+					prompt: 'Sua senha deve possuir pelo menos 6 caracteres'
+				}
+			]
+		}
+	},
+	{
+      inline : true,
+      on     : 'blur'
+  });
+})
+
 Template.contaLogin.events({
 	'click #btn': function(e) {
 		e.preventDefault();
 		Router.go('/conta/nova');
 	}
+});
+
+Template.contaNova.onRendered(function(){
+
+	$('#novo').form({
+		nome: {
+			identifier: 'nome',
+			rules: [
+				{
+					type: 'empty',
+					prompt: 'Por favor, informe um nome válido.'
+				}
+			]
+		},
+		email: {
+			identifier: 'email',
+			rules: [
+				{
+					type: 'email',
+					prompt: 'Por favor, informe um e-mail válido.'
+				}
+			]
+		},
+		senha: {
+			identifier: 'senha',
+			rules: [
+				{
+					type: 'empty',
+					prompt: 'Por favor, informe a Senha'
+				},
+				{
+					type: 'length[6]',
+					prompt: 'Sua senha deve possuir pelo menos 6 caracteres'
+				}
+			]
+		}
+	},
+	{
+      inline : true,
+      on     : 'blur'
+  })
 });
 
 Template.contaNova.events({
@@ -11,21 +83,7 @@ Template.contaNova.events({
 
 		var form = $(event.target).closest('form');
 		form.submit();
-
-		/*
-
-		var dados = {
-			email: $(this).closest('form').val(),
-			password: event.target.senha.value
-		};
-
-		Accounts.createUser(dados, function(err) {
-			if (err)
-				console.log(err);
-			else
-				console.log('success!');
-		});
-*/
+		
 	},
 	'submit form': function(event) {
 		event.preventDefault();
@@ -36,14 +94,23 @@ Template.contaNova.events({
 		};
 
 		Accounts.createUser(dados, function(err) {
-			if (err) {
-				$('.ui.modal')
-				  .modal('show')
-				  .find('.description').html(err)
-				;
-			}
-			else
-				Router.go('/');
+
+			$('.success.message').fadeIn();
+
+			setTimeout(function() {
+
+				$('.success.message').fadeOut();
+				Router.go('/posts/');
+			}, 3500);
+
+			// if (err) {
+			// 	$('.ui.modal')
+			// 	  .modal('show')
+			// 	  .find('.description').html(err)
+			// 	;
+			// }
+			// else
+			// 	Router.go('/');
 		});
 	}
 });
