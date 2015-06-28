@@ -4,6 +4,12 @@ Template.StatusItem.onRendered(function () {
     $( ".status-columns" ).sortable();
 });
 
+Template.TarefaItem.helpers({
+  usuarioNome: function() {
+    return Meteor.user().profile.nome;
+  }
+});
+
 Template.StatusItem.events({
     'click #btn-criar-tarefa': function (e) {
         e.preventDefault();
@@ -25,7 +31,7 @@ Template.StatusItem.events({
     },
     'click #btn-editar-status': function (e) {
         e.preventDefault();
-        
+
         $('#modal-novo-status').modal({
             detachable:false,
             selector    : {
@@ -34,12 +40,12 @@ Template.StatusItem.events({
                 deny     : ''
             }
         }).modal('show');
-        
+
         $('#btn-confirmar-status').html('Salvar');
-        
+
         var nomeField = $('#modal-novo-status input[name=nome]');
         var status = Status.findOne({_id: this._id});
-        
+
         nomeField.val(status.nome);
         $('#modal-novo-status input[name=_id]').val(this._id);
     },
@@ -79,10 +85,10 @@ Template.Home.events({
     },
     'click #btn-confirmar-status': function (e) {
         e.preventDefault();
-        
+
         var nomeField = $('#modal-novo-status input[name=nome]');
         var idField = $('#modal-novo-status input[name=_id]');
-        
+
         if (idField.val().length > 0) {
             Status.update({
                 _id: idField.val()
@@ -94,7 +100,7 @@ Template.Home.events({
                 nome: nomeField.val()
             });
         }
-        
+
         $('#modal-novo-status').modal('hide');
     },
     'click #btn-fechar-modal-novo-status': function (e) {
@@ -111,7 +117,7 @@ Template.Home.events({
                 deny     : ''
             }
         }).modal('show');
-        
+
         $('#modal-novo-status input[name=_id]').val('');
         $('#modal-novo-status input[name=nome]').val('');
         $('#btn-confirmar-status').html('Criar');

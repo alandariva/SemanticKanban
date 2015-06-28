@@ -108,7 +108,10 @@ Template.contaNova.events({
 
         var dados = {
             email: event.target.email.value,
-            password: event.target.senha.value
+            password: event.target.senha.value,
+            profile: {
+                nome: event.target.nome.value
+            }
         };
 
         Accounts.createUser(dados, function (err) {
