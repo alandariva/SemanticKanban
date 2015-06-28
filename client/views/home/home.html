@@ -38,6 +38,39 @@
                             <label>Nome</label>
                             <input type="text" name="nome" placeholder="Nome">
                         </div>
+
+                        <div class="inline fields campo-cores">
+                            <label for="fruit">Cor:</label>
+
+                            <div class="field">
+                              <div class="ui radio checkbox">
+                                <input type="radio" name="cor" value="CCCCCC" checked="checked">
+                                <label><div style="width:20px; height: 20px; background: #CCCCCC"></div></label>
+                              </div>
+                            </div>
+
+                            <div class="field">
+                              <div class="ui radio checkbox">
+                                <input type="radio" name="cor" value="6AD2BA">
+                                <label><div style="width:20px; height: 20px; background: #6AD2BA"></div></label>
+                              </div>
+                            </div>
+
+                            <div class="field">
+                              <div class="ui radio checkbox">
+                                <input type="radio" name="cor" value="A0CBDA">
+                                <label><div style="width:20px; height: 20px; background: #A0CBDA"></div></label>
+                              </div>
+                            </div>
+
+                            <div class="field">
+                              <div class="ui radio checkbox">
+                                <input type="radio" name="cor" value="D5B7B7">
+                                <label><div style="width:20px; height: 20px; background: #D5B7B7"></div></label>
+                              </div>
+                            </div>
+
+                          </div>
                     </div>
                 </div>
                 <div class="actions">
@@ -55,7 +88,7 @@
 </template>
 
 <template name="StatusItem">
-    <div class="status" data-id="{{_id}}">
+    <div class="status" style="background: #{{cor}}; border: 2px solid #999" data-id="{{_id}}">
         <div class="ui dropdown button" id="btn-criar-tarefa">
             <i class="plus icon"></i>
             Tarefa
