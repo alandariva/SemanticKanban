@@ -1,7 +1,8 @@
+var i = 1;
 
 Template.StatusItem.onRendered(function () {
     this.$('.ui.dropdown').dropdown();
-
+    i = 1;
     // Ordenação dos status
     $( ".status-columns" ).sortable({
         handle: '.move.icon.StatusItem',
@@ -24,6 +25,14 @@ Template.TarefaItem.helpers({
         return Meteor.users.findOne({ _id: this.usuario_id }).profile.nome;
     }
 });
+
+
+Template.TarefaItem.helpers({
+    count: function() {
+        return i++;
+    }
+});
+
 
 Template.TarefaItem.onRendered(function() {
     $('.lista-tarefas').sortable({
