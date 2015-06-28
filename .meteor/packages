@@ -11,3 +11,4 @@ semantic:ui-css
 iron:router
 accounts-ui
 accounts-password
+linto:jquery-ui

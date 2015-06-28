@@ -1,7 +1,22 @@
 
 Template.StatusItem.onRendered(function () {
     this.$('.ui.dropdown').dropdown();
-    $( ".status-columns" ).sortable();
+
+    // Ordenação dos status
+    $( ".status-columns" ).sortable({
+        handle: '.move.icon.StatusItem',
+        stop: function(event, ui) {
+            $('.status-column > .status').each(function(i) {
+                Status.update({
+                    _id: $(this).data('id')
+                }, {
+                    $set: {
+                        ordem: i
+                    }
+                });
+            });
+        }
+    });
 });
 
 Template.TarefaItem.helpers({
@@ -132,7 +147,7 @@ Template.Home.helpers({
         return Meteor.user().emails[0].address;
     },
     status: function() {
-        return Status.find({});
+        return Status.find({}, {sort: {ordem: 1}});
     }
 });
 

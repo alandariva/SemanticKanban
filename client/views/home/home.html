@@ -46,8 +46,7 @@
 </template>
 
 <template name="StatusItem">
-    <div class="status">
-        <input type="hidden" value="{{ID}}" />
+    <div class="status" data-id="{{_id}}">
         <div class="ui dropdown button" id="btn-criar-tarefa">
             <i class="plus icon"></i>
             Tarefa
@@ -88,7 +87,7 @@
             </div>
         </div>
 
-        <i class="move icon"></i>
+        <i class="move icon StatusItem"></i>
 
         <h5 class="ui top attached header">
             {{nome}}
