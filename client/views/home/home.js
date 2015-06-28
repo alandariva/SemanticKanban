@@ -65,6 +65,14 @@ Template.TarefaItem.onRendered(function() {
     });
 });
 
+Template.TarefaItem.events({
+    'click .excluir-tarefa': function (e, t) {
+        e.preventDefault();
+        
+        Tarefas.remove(this._id);
+    }
+});
+
 Template.StatusItem.helpers({
     tarefas: function(e, template) {
         return Tarefas.find({status_id: this._id}, {sort: {ordem: 1}});
