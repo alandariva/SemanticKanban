@@ -64,6 +64,14 @@ Template.TarefaItem.onRendered(function() {
     });
 });
 
+Template.TarefaItem.events({
+    'click .excluir-tarefa': function (e, t) {
+        e.preventDefault();
+        
+        Tarefas.remove(this._id);
+    }
+});
+
 Template.StatusItem.helpers({
     tarefas: function(e, template) {
         return Tarefas.find({status_id: this._id}, {sort: {ordem: 1}});
@@ -135,6 +143,11 @@ Template.StatusItem.events({
 
         nomeField.val(status.nome);
         $('#modal-novo-status input[name=_id]').val(this._id);
+        $('#modal-novo-status input[name=cor][value="' + this.cor + '"]').prop('checked', true);
+
+        $('#modal-novo-status .ui.radio.checkbox')
+          .checkbox()
+        ;
     },
     'click .card' : function(e) {
         $('#historico-tarefa').modal('show')
@@ -147,18 +160,21 @@ Template.Home.events({
 
         var nomeField = $('#modal-novo-status input[name=nome]');
         var idField = $('#modal-novo-status input[name=_id]');
+        var cor = $('#modal-novo-status input[name=cor]:checked');
 
         if (idField.val().length > 0) {
             Status.update({
                 _id: idField.val()
             }, {
                 $set: {
-                    nome: nomeField.val()
+                    nome: nomeField.val(),
+                    cor: cor.val()
                 }
             });
         } else {
             Status.insert({
-                nome: nomeField.val()
+                nome: nomeField.val(),
+                cor: cor.val()
             });
         }
 
@@ -182,6 +198,10 @@ Template.Home.events({
         $('#modal-novo-status input[name=_id]').val('');
         $('#modal-novo-status input[name=nome]').val('');
         $('#btn-confirmar-status').html('Criar');
+
+        $('#modal-novo-status .ui.radio.checkbox')
+          .checkbox()
+        ;
     },
     'mouseover .icon': function(e) {
     }
