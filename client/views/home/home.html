@@ -24,7 +24,7 @@
                 <div class="content">
                     <div class="ui form">
                         <input type="hidden" name="_id" />
-                        
+
                         <div class="field">
                             <label>Nome</label>
                             <input type="text" name="nome" placeholder="Nome">
@@ -48,10 +48,38 @@
 <template name="StatusItem">
     <div class="status">
         <input type="hidden" value="{{ID}}" />
-        <div class="ui dropdown button">
+        <div class="ui dropdown button" id="btn-criar-tarefa">
             <i class="plus icon"></i>
             Tarefa
         </div>
+
+        <div class="ui modal" id="modal-nova-tarefa">
+            <i class="close icon"></i>
+            <div class="header">
+                Tarefa
+            </div>
+            <div class="content">
+                <div class="ui form">
+                    <div class="field">
+                        <label>Tarefa</label>
+                        <input type="text" name="tarefa" placeholder="Tarefa">
+                    </div>
+                    <div class="field">
+                        <label>Descrição</label>
+                        <input type="text" name="descricao" placeholder="Descricao">
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui red button" id="btn-fechar-modal-nova-tarefa">
+                    Cancelar
+                </div>
+                <div class="ui positive right labeled icon button" id="btn-confirmar-tarefa">
+                    Criar
+                </div>
+            </div>
+        </div>
+
         <div class="ui icon top left pointing dropdown button">
             <i class="wrench icon"></i>
             <div class="menu">
@@ -65,7 +93,7 @@
         <h5 class="ui top attached header">
             {{nome}}
         </h5>
-        
+
         <div class="ui modal" id="historico-tarefa">
             <i class="close icon"></i>
             <div class="header">
@@ -117,36 +145,10 @@
         </div>
 
         <div class="ui attached segment">
-            
-            {{#each tarefa}}
+
+            {{#each tarefas}}
             {{> TarefaItem}}
             {{/each}}
-            <div class="ui card">
-                <div class="content">
-                    <div class="header">Tarefa #1</div>
-                    <div class="description">
-                        <p>Tarefa de teste</p>
-                    </div>
-                </div>
-                <div class="extra content">
-                    <div class="right floated author">
-                        <img class="ui avatar image" src="/images/matt.jpg"> Matt
-                    </div>
-                </div>
-            </div>
-            <div class="ui card">
-                <div class="content">
-                    <div class="header">Tarefa #2</div>
-                    <div class="description">
-                        <p>Tarefa de teste</p>
-                    </div>
-                </div>
-                <div class="extra content">
-                    <div class="right floated author">
-                        <img class="ui avatar image" src="/images/matt.jpg"> Matt
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </template>
@@ -154,12 +156,17 @@
 <template name="TarefaItem">
     <div class="ui vertical segment">
         <div class="task">
-            <div class="ui fluid card">
-                <div class="image">
-                    <img src="/images/avatar/large/daniel.jpg">
-                </div>
+            <div class="ui card">
                 <div class="content">
-                    <a class="header">Daniel Louise</a>
+                    <div class="header">{{tarefa}} #1</div>
+                    <div class="description">
+                        <p>{{descricao}}</p>
+                    </div>
+                </div>
+                <div class="extra content">
+                    <div class="right floated author">
+                        <img class="ui avatar image" src="/images/matt.jpg"> Matt
+                    </div>
                 </div>
             </div>
         </div>

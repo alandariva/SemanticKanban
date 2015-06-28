@@ -1,4 +1,3 @@
-
 Status = new Mongo.Collection("status");
 
 Meteor.methods({

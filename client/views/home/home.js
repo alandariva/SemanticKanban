@@ -5,6 +5,20 @@ Template.StatusItem.onRendered(function () {
 });
 
 Template.StatusItem.events({
+    'click #btn-criar-tarefa': function (e) {
+        e.preventDefault();
+
+        $('#modal-nova-tarefa').modal({
+            detachable:false,
+            selector    : {
+                close    : '.close',
+                approve  : '',
+                deny     : ''
+            }
+        }).modal('show');
+
+        $('#btn-confirmar-tarefa').html('Salvar');
+    },
     'click #btn-deletar-status': function (e) {
         e.preventDefault();
         Status.remove(this._id);
@@ -35,6 +49,34 @@ Template.StatusItem.events({
 });
 
 Template.Home.events({
+    'click #btn-confirmar-tarefa': function (e) {
+        e.preventDefault();
+
+        var tarefaField = $('#modal-nova-tarefa input[name=tarefa]');
+        var descricaoField = $('#modal-nova-tarefa input[name=descricao]');
+
+        var status = Status.findOne({_id: this._id});
+
+        var tarefas = status.tarefas;
+        if(tarefas == undefined) {
+            tarefas = [{tarefa: tarefaField.val() , descricao: descricaoField.val()}];
+        } else {
+            tarefas.push({tarefa: tarefaField.val() , descricao: descricaoField.val()});
+        }
+
+        Status.update({
+            _id: status._id
+        }, {
+            tarefas: tarefas
+        });
+
+        $('#modal-nova-tarefa').modal('hide');
+    },
+    'click #btn-fechar-modal-nova-tarefa': function (e) {
+        e.preventDefault();
+
+        $('#modal-nova-tarefa').modal('hide');
+    },
     'click #btn-confirmar-status': function (e) {
         e.preventDefault();
         
@@ -57,7 +99,7 @@ Template.Home.events({
     },
     'click #btn-fechar-modal-novo-status': function (e) {
         e.preventDefault();
-        
+
         $('#modal-novo-status').modal('hide');
     },
     'click #btn-novo-status': function (e) {
@@ -80,7 +122,7 @@ Template.Home.events({
 
 Template.Home.helpers({
     emailUsuario: function () {
-        
+
         return Meteor.user().emails[0].address;
     },
     status: function() {
