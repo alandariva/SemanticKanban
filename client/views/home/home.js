@@ -1,8 +1,7 @@
-var i = 1;
 
 Template.StatusItem.onRendered(function () {
     this.$('.ui.dropdown').dropdown();
-    i = 1;
+
     // Ordenação dos status
     $( ".status-columns" ).sortable({
         handle: '.move.icon.StatusItem',
@@ -29,7 +28,7 @@ Template.TarefaItem.helpers({
 
 Template.TarefaItem.helpers({
     count: function() {
-        return i++;
+        return this._id.substring(0, 7);
     }
 });
 
