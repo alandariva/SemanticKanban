@@ -21,8 +21,8 @@ Template.StatusItem.onRendered(function () {
 });
 
 Template.TarefaItem.helpers({
-    usuarioNome: function() {
-        return Meteor.users.findOne({ _id: this.usuario_id }).profile.nome;
+    profile: function() {
+        return Meteor.users.findOne({ _id: this.usuario_id }).profile;
     }
 });
 
@@ -190,8 +190,10 @@ Template.Home.events({
 
 Template.Home.helpers({
     emailUsuario: function () {
-
         return Meteor.user().emails[0].address;
+    },
+    nomeUsuario: function () {
+        return Meteor.user().profile.nome;
     },
     status: function() {
         return Status.find({}, {sort: {ordem: 1}});

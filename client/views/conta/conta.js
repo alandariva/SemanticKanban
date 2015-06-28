@@ -109,7 +109,8 @@ Template.contaNova.events({
             email: event.target.email.value,
             password: event.target.senha.value,
             profile: {
-                nome: event.target.nome.value
+                nome: event.target.nome.value,
+                avatar: Math.floor((Math.random() * 11) + 1)
             }
         };
 
