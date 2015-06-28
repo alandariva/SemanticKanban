@@ -20,10 +20,18 @@ Template.StatusItem.onRendered(function () {
 });
 
 Template.TarefaItem.helpers({
-    usuarioNome: function() {
-        return Meteor.users.findOne({ _id: this.usuario_id }).profile.nome;
+    profile: function() {
+        return Meteor.users.findOne({ _id: this.usuario_id }).profile;
     }
 });
+
+
+Template.TarefaItem.helpers({
+    count: function() {
+        return this._id.substring(0, 7);
+    }
+});
+
 
 Template.TarefaItem.onRendered(function() {
     $('.lista-tarefas').sortable({
@@ -54,6 +62,14 @@ Template.TarefaItem.onRendered(function() {
               }
           }
     });
+});
+
+Template.TarefaItem.events({
+    'click .excluir-tarefa': function (e, t) {
+        e.preventDefault();
+        
+        Tarefas.remove(this._id);
+    }
 });
 
 Template.StatusItem.helpers({
@@ -126,6 +142,11 @@ Template.StatusItem.events({
         var status = Status.findOne({_id: this._id});
         nomeField.val(status.nome);
         $('#modal-novo-status input[name=_id]').val(this._id);
+        $('#modal-novo-status input[name=cor][value="' + this.cor + '"]').prop('checked', true);
+
+        $('#modal-novo-status .ui.radio.checkbox')
+          .checkbox()
+        ;
     },
     'click .card' : function(e) {
 
@@ -165,18 +186,21 @@ Template.Home.events({
 
         var nomeField = $('#modal-novo-status input[name=nome]');
         var idField = $('#modal-novo-status input[name=_id]');
+        var cor = $('#modal-novo-status input[name=cor]:checked');
 
         if (idField.val().length > 0) {
             Status.update({
                 _id: idField.val()
             }, {
                 $set: {
-                    nome: nomeField.val()
+                    nome: nomeField.val(),
+                    cor: cor.val()
                 }
             });
         } else {
             Status.insert({
-                nome: nomeField.val()
+                nome: nomeField.val(),
+                cor: cor.val()
             });
         }
 
@@ -200,6 +224,10 @@ Template.Home.events({
         $('#modal-novo-status input[name=_id]').val('');
         $('#modal-novo-status input[name=nome]').val('');
         $('#btn-confirmar-status').html('Criar');
+
+        $('#modal-novo-status .ui.radio.checkbox')
+          .checkbox()
+        ;
     },
     'mouseover .icon': function(e) {
     }
@@ -207,8 +235,10 @@ Template.Home.events({
 
 Template.Home.helpers({
     emailUsuario: function () {
-
         return Meteor.user().emails[0].address;
+    },
+    nomeUsuario: function () {
+        return Meteor.user().profile.nome;
     },
     status: function() {
         return Status.find({}, {sort: {ordem: 1}});
