@@ -124,12 +124,38 @@ Template.StatusItem.events({
 
         var nomeField = $('#modal-novo-status input[name=nome]');
         var status = Status.findOne({_id: this._id});
-
         nomeField.val(status.nome);
         $('#modal-novo-status input[name=_id]').val(this._id);
     },
     'click .card' : function(e) {
-        $('#historico-tarefa').modal('show')
+
+
+
+       var nomeStatus;
+       var tarefa            = Tarefas.findOne(this._id);
+       var tarefaHistorico   = TarefasHistorico.find({tarefa_id: tarefa._id});
+       var html              = '';
+
+       statusAlterados = _.pluck(tarefaHistorico.fetch(), 'status_id');
+       
+       if (statusAlterados.length == 0){
+         html = 'Tarefa sem movimentação.';
+       }
+
+       statusAlterados.forEach(function(status_id) {
+
+         nomeStatus = Status.findOne({_id: status_id});
+         html += '<div class="summary">Alterado para o status ' + nomeStatus.nome + '</div>';
+       });
+
+       $('#historico-tarefa .content').html(html);
+       $('#historico-tarefa .header').html("Histórico da Tarefa '" + tarefa.tarefa +"'")
+
+
+//       console.info(statusAlterados);
+
+       $('#historico-tarefa').modal('show');
+
     }
 });
 
