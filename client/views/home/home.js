@@ -5,7 +5,7 @@ Template.StatusItem.onRendered(function () {
     // Ordenação dos status
     $( ".status-columns" ).sortable({
         handle: '.move.icon.StatusItem',
-        stop: function(event, ui) {
+        update: function(event, ui) {
             $('.status-column > .status').each(function(i) {
                 Status.update({
                     _id: $(this).data('id')
@@ -25,11 +25,41 @@ Template.TarefaItem.helpers({
   }
 });
 
+Template.TarefaItem.onRendered(function() {
+    $('.lista-tarefas').sortable({
+          connectWith: '.lista-tarefas',
+          handle: ".task .card",
+          update: function(event, ui) {
+              if (this === ui.item.parent()[0]) { // Prevenção para update não ser chamado duas vezes
+                  $(ui.item).closest('.lista-tarefas').find('.task').each(function (i) {
+                      Tarefas.update({
+                          _id: $(this).data('id')
+                      }, {
+                          $set: {
+                              ordem: i,
+                              status_id: $(this).closest('.status').data('id')
+                          }
+                      });
+                  });
+              }
+          }
+    });
+});
+
+Template.StatusItem.helpers({
+    tarefas: function(e, template) {
+        return Tarefas.find({status_id: this._id}, {sort: {ordem: 1}});
+    }
+})
+
 Template.StatusItem.events({
-    'click #btn-criar-tarefa': function (e) {
+    // -----------------------
+    // ----- Tarefas
+    // -----------------------
+    'click #btn-criar-tarefa': function (e, t) {
         e.preventDefault();
 
-        $('#modal-nova-tarefa').modal({
+        $(t.find('.modal-nova-tarefa')).modal({
             detachable:false,
             selector    : {
                 close    : '.close',
@@ -38,13 +68,31 @@ Template.StatusItem.events({
             }
         }).modal('show');
 
-        $('#btn-confirmar-tarefa').html('Salvar');
+        $(t.find('.btn-confirmar-tarefa')).html('Salvar');
     },
+    'click .btn-confirmar-tarefa': function (e, t) {
+        e.preventDefault();
+
+        var tarefaField = $(t.find('.modal-nova-tarefa input[name=tarefa]'));
+        var descricaoField = $(t.find('.modal-nova-tarefa input[name=descricao]'));
+
+        var tarefa = Tarefas.insert({
+            tarefa: tarefaField.val(),
+            descricao: descricaoField.val(),
+            status_id: this._id
+        });
+
+        $(t.find('.modal-nova-tarefa')).modal('hide');
+    },
+    // -----------------------
+    // ----- FIM - Tarefas
+    // -----------------------
+
     'click #btn-deletar-status': function (e) {
         e.preventDefault();
         Status.remove(this._id);
     },
-    'click #btn-editar-status': function (e) {
+    'click #btn-editar-status': function (e, template) {
         e.preventDefault();
 
         $('#modal-novo-status').modal({
@@ -70,34 +118,6 @@ Template.StatusItem.events({
 });
 
 Template.Home.events({
-    'click #btn-confirmar-tarefa': function (e) {
-        e.preventDefault();
-
-        var tarefaField = $('#modal-nova-tarefa input[name=tarefa]');
-        var descricaoField = $('#modal-nova-tarefa input[name=descricao]');
-
-        var status = Status.findOne({_id: this._id});
-
-        var tarefas = status.tarefas;
-        if(tarefas == undefined) {
-            tarefas = [{tarefa: tarefaField.val() , descricao: descricaoField.val()}];
-        } else {
-            tarefas.push({tarefa: tarefaField.val() , descricao: descricaoField.val()});
-        }
-
-        Status.update({
-            _id: status._id
-        }, {
-            tarefas: tarefas
-        });
-
-        $('#modal-nova-tarefa').modal('hide');
-    },
-    'click #btn-fechar-modal-nova-tarefa': function (e) {
-        e.preventDefault();
-
-        $('#modal-nova-tarefa').modal('hide');
-    },
     'click #btn-confirmar-status': function (e) {
         e.preventDefault();
 
@@ -108,7 +128,9 @@ Template.Home.events({
             Status.update({
                 _id: idField.val()
             }, {
-                nome: nomeField.val()
+                $set: {
+                    nome: nomeField.val()
+                }
             });
         } else {
             Status.insert({

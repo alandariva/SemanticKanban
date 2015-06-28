@@ -1,4 +1,3 @@
-Status = new Mongo.Collection("status");
 
 Template.contaLogin.onRendered(function () {
     $('#login').form({
