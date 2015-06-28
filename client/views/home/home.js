@@ -20,9 +20,9 @@ Template.StatusItem.onRendered(function () {
 });
 
 Template.TarefaItem.helpers({
-  usuarioNome: function() {
-    return Meteor.user().profile.nome;
-  }
+    usuarioNome: function() {
+        return Meteor.users.findOne({ _id: this.usuario_id }).profile.nome;
+    }
 });
 
 Template.TarefaItem.onRendered(function() {
@@ -32,12 +32,22 @@ Template.TarefaItem.onRendered(function() {
           update: function(event, ui) {
               if (this === ui.item.parent()[0]) { // Prevenção para update não ser chamado duas vezes
                   $(ui.item).closest('.lista-tarefas').find('.task').each(function (i) {
+                      var statusId = $(this).closest('.status').data('id');
+                      var tarefa = Tarefas.findOne($(this).data('id'));
+
+                      if (tarefa.status_id != statusId) {
+                          TarefasHistorico.insert({
+                              tarefa_id: tarefa._id,
+                              status_id: statusId
+                          });
+                      }
+
                       Tarefas.update({
                           _id: $(this).data('id')
                       }, {
                           $set: {
                               ordem: i,
-                              status_id: $(this).closest('.status').data('id')
+                              status_id: statusId
                           }
                       });
                   });
@@ -79,6 +89,12 @@ Template.StatusItem.events({
         var tarefa = Tarefas.insert({
             tarefa: tarefaField.val(),
             descricao: descricaoField.val(),
+            status_id: this._id,
+            usuario_id: Meteor.user()._id
+        });
+
+        TarefasHistorico.insert({
+            tarefa_id: tarefa._id,
             status_id: this._id
         });
 
